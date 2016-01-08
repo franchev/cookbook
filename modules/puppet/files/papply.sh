@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo puppet apply /home/vagrant/cookbook/manifests/site.pp --modulepath=/home/vagrant/cookbook/modules $*
+sudo puppet apply /home/ubuntu/cookbook/manifests/site.pp --modulepath=/home/ubuntu/cookbook/modules $*

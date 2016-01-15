@@ -6,13 +6,31 @@ class redhatlike {
   notify { 'Special manifest for RedHat-like Systems': }
 }
 
+# using definitions
+define tmpfile() {
+  file { "/tmp/${name}":
+    content => "Hello, world\n",
+  }
+}
+
 node 'cookbook' {
+  include admin::stages
+  include admin::ntp
+
   #file { '/tmp/hello': 
   #  content => "Hello, world\n",
   #}
   #include puppet
   #include memcached
 
+  # using tag
+  if tagged('admin::ntp') {
+    notify { 'This node is running NTP': }
+  }
+
+  if tagged('admin') {
+    notify { 'THis node includes at least one class from the admin module': }
+  }  
 
   # Testing if and else statements
   if $::operatingsystem == 'Ubuntu' {
@@ -82,4 +100,7 @@ node 'cookbook' {
   # testing regsubst function
   $class_c = regsubst($::ipaddress, '(.*)\..*', '\1.0')
   notify { "The network part of ${::ipaddress} is ${class_c}": }
+
+
+  tmpfile { ['a', 'b', 'c']: }
 }

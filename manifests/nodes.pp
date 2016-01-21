@@ -14,8 +14,17 @@ define tmpfile() {
 }
 
 node 'cookbook' {
-  include admin::stages
-  include admin::ntp
+  #include admin::stages
+  #include admin::ntp
+}
+node 'puppet-cookbook' {
+  #include admin::stages
+  #include admin::ntp
+  include stdlib
+  include loopdocker::kubernetes::secure_volumes
+}
+
+node test {
 
   #file { '/tmp/hello': 
   #  content => "Hello, world\n",

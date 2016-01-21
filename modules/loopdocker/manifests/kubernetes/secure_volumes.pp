@@ -1,4 +1,4 @@
-class loopdocker::kubernetes::secure_volumes ($blackhawk_p12_b64 = hiera('blackhawk_p12_b64', 'look-in-gpg-hiera'),
+class loopdocker::kubernetes::secure_volumes ($blackhawk_p12_b64 = hiera('blackhawk_p12_b64', 'bG9vay1pbi1ncGctaGllcmEK'),
                                                $blackhawk_keystore_password = hiera('blackhawk_keystore_password', 'look-in-gpg-hiera')
                                               ) {
   $blackhawk_p12 = base64('decode', $blackhawk_p12_b64)

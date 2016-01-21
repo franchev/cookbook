@@ -14,8 +14,30 @@ define tmpfile() {
 }
 
 node 'cookbook' {
+  append_if_no_such_line { 'enable-ip-conntrack':
+    file => '/etc/modules',
+    line => 'ip_conntrack',
+  }
+
+  replace_matching_line { 'disable-ip-conntrack':
+    file    => '/etc/modules',
+    match   => '^ip_conntrack',
+    replace => '#ip_conntrack',
+  }
+}
+node 'test' {
+  # Testing shellquotes
+  $source = 'Hello Jerry'
+  $target = 'Hello... Newman'
+  $argstring = shellquote($source, $target)
+  $command = "/bin/mv ${argstring}"
+  notify { $command: }
+  
+  $message = generate('/usr/local/bin/message.rb')
+  notify { $message: }
   include admin::stages
-  include admin::ntp
+  #include admin::ntp
+  include admin::ntp_uk
 
   #file { '/tmp/hello': 
   #  content => "Hello, world\n",

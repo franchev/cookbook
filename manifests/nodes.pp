@@ -14,9 +14,26 @@ define tmpfile() {
 }
 
 node 'cookbook' {
-<<<<<<< HEAD
   #include admin::stages
   #include admin::ntp
+  augeas { 'enable-ip-forwarding':
+    context => '/files/etc/sysctl.conf',
+    changes => ['set net.ipv4.ip_forward 1'],
+  }
+  include admin::rsyncdconf
+
+  file { '/etc/rsyncd.d/myapp.conf':
+    ensure  => present,
+    source  => 'puppet:///modules/admin/myapp.rsync',
+    require => File['/etc/rsyncd.d'],
+    notify  => Exec['update-rsyncd.conf'],
+  }
+
+  $mysql_password = 'secret'
+  file { '/usr/local/bin/backup-mysql':
+    content => template('admin/backup-mysql.sh.erb'),
+    mode => '0755',
+  }
 }
 node 'puppet-cookbook' {
   #include admin::stages
@@ -25,8 +42,7 @@ node 'puppet-cookbook' {
   include loopdocker::kubernetes::secure_volumes
 }
 
-node test {
-=======
+node test1 {
   append_if_no_such_line { 'enable-ip-conntrack':
     file => '/etc/modules',
     line => 'ip_conntrack',
@@ -51,7 +67,6 @@ node 'test' {
   include admin::stages
   #include admin::ntp
   include admin::ntp_uk
->>>>>>> 403914b3a6372606db15a7e00e4d2527e272cc31
 
   #file { '/tmp/hello': 
   #  content => "Hello, world\n",

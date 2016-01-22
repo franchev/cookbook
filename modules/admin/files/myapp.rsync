@@ -1,0 +1,8 @@
+[myapp]
+  uid = myappuser
+  gid = myappuser
+  path = /opt/myapp/shared/data
+  comment = Data for myapp
+  list = no
+  read only = no
+  auth users = myappuser

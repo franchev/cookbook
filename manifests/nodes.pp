@@ -14,19 +14,17 @@ define tmpfile() {
 }
 
 node 'cookbook' {
-<<<<<<< HEAD
   #include admin::stages
   #include admin::ntp
 }
 node 'puppet-cookbook' {
   #include admin::stages
   #include admin::ntp
-  include stdlib
+  #include stdlib
   include loopdocker::kubernetes::secure_volumes
 }
 
-node test {
-=======
+node test1 {
   append_if_no_such_line { 'enable-ip-conntrack':
     file => '/etc/modules',
     line => 'ip_conntrack',
@@ -51,7 +49,6 @@ node 'test' {
   include admin::stages
   #include admin::ntp
   include admin::ntp_uk
->>>>>>> 403914b3a6372606db15a7e00e4d2527e272cc31
 
   #file { '/tmp/hello': 
   #  content => "Hello, world\n",

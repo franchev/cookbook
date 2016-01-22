@@ -38,7 +38,7 @@ node 'cookbook' {
 node 'puppet-cookbook' {
   #include admin::stages
   #include admin::ntp
-  include stdlib
+  #include stdlib
   include loopdocker::kubernetes::secure_volumes
 }
 

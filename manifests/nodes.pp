@@ -14,6 +14,17 @@ define tmpfile() {
 }
 
 node 'cookbook' {
+  include admin::percona_repo
+  
+  package { 'percona-server-server-5.5':
+    ensure  => installed,
+    require => Class['admin::percona_repo'],
+  }
+}
+
+node 'test3' {
+  $message = secret('/home/ubuntu/cookbook/modules/admin/files/secret_message.gpg')
+  notify { "The secret message is: ${message}":}
   #include admin::stages
   #include admin::ntp
   augeas { 'enable-ip-forwarding':
@@ -34,6 +45,14 @@ node 'cookbook' {
     content => template('admin/backup-mysql.sh.erb'),
     mode => '0755',
   }
+
+  $ipaddress = ['192.168.0.1',
+                '158.43.128.1',
+                '10.0.75.207' ]
+
+  #file { '/tmp/addresslist.txt':
+  #  content => template('admin/addresslist.erb')
+  #}
 }
 node 'puppet-cookbook' {
   #include admin::stages

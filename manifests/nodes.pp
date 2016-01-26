@@ -58,7 +58,16 @@ node 'puppet-cookbook' {
   #include admin::stages
   #include admin::ntp
   #include stdlib
-  include loopdocker::kubernetes::secure_volumes
+  #include loopdocker::kubernetes::secure_volumes
+  include apt
+  #include loopapp::gcback
+  include loopapp::admintool
+  #include loopbasic::aptupdate
+  #include loopenv::tomcat7service
+  #include loopapp::pfrest
+  #include loopapp::gcrest
+  #include loopapp::resrest
+  #include loopapp::resback
 }
 
 node test1 {

@@ -13,6 +13,8 @@ define tmpfile() {
   }
 }
 
+node 'ubuntu-server01' {
+}
 node 'cookbook' {
   include admin::percona_repo
   
